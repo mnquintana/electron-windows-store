@@ -23,7 +23,9 @@ function flatMe([string]$path){
     Get-ChildItem $path -Directory | ForEach-Object {
         if($_.Name -eq 'node_modules'){
             Write-Host "Flattening: " $path
+            Push-Location -Path $path -PassThru
             npm dedupe
+            Pop-Location -PassThru
         } else {
             flatMe($path + $_)
         }
